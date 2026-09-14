@@ -1,0 +1,18 @@
+# 构建中间产物
+bin/
+obj/
+*.obj
+*.pdb
+*.mdb
+
+# 校验脚本的临时输出
+Tools/_verify_targets.md
+Tools/_verify_transpiler.md
+
+# 编辑器 / 系统
+.vs/
+.idea/
+*.user
+*.suo
+Thumbs.db
+desktop.ini

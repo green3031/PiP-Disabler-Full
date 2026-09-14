@@ -1,0 +1,22 @@
+# 文本文件一律以 LF 存储 / 检出。
+#
+# 理由：本仓库的价值之一是可复现构建 —— 源码重新编译应得到与 release/ 中
+# 完全相同的 PiP-Disabler.dll（215,040 字节 / SHA256 85AC781C…）。
+# 若行尾因平台或 core.autocrlf 被改写，可能破坏这一保证；二进制资源同理不可被转换。
+
+* -text
+
+*.cs        text eol=lf
+*.md        text eol=lf
+*.json      text eol=lf
+*.ps1       text eol=lf
+*.shader    text eol=lf
+*.manifest  text eol=lf
+.gitignore  text eol=lf
+.gitattributes text eol=lf
+
+# 二进制：禁止任何转换
+*.bundle   -text
+*.dll      -text
+*.png      -text
+*.jpg      -text
