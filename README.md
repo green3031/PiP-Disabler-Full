@@ -74,6 +74,11 @@ i18n\README.md
 - `Tools\verify_patch_targets.ps1` —— Harmony 目标必须 **72 EXISTS / 0 PROBLEM**，且 4.0.13 遗留名扫描 0 命中（会在 `Tools\` 下写出 `_verify_targets.md` / `_verify_transpiler.md` 两份临时清单）
 - `Tools\verify_defaults_unchanged.ps1` —— 既有默认值不得变动（应报 **102 compared / 0 mismatched**）
 
+> **可复现性已实测**：全新 `git clone` 本仓库后直接编译，得到与 `release\PiP-Disabler.dll` **逐字节相同**的文件
+> （215,040 字节 / SHA256 `85AC781CDADF9EFA10F5D52862665D3F7C4B9E0AE670C7CFF1EFE3D4C5249A69`），
+> 换个目录编译结果也一样。构建开关含 `-deterministic`；`.gitattributes` 锁定文本文件为 LF，
+> 避免行尾被平台或 `core.autocrlf` 改写而影响结果。
+
 > `Tools\` 下还留有更早期做法（把 cfg 键名汉化）的脚本 —— `verify_zh_rewrite.ps1`（其文件头已标 `OBSOLETE / DO NOT RUN`）、`apply_settings_zh.ps1`、`migrate_cfg_names.ps1`。**现行方案是外部语言文件，不需要它们**，保留仅为记录演进过程。
 >
 > `Tools\` 下的脚本保留了移植时使用的**作者本地绝对路径**（指向作者机器的游戏目录与工作区），在其他机器上需要先改这些路径。
