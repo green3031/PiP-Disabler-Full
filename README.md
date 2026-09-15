@@ -51,15 +51,53 @@ i18n\README.md
 
 按瞄具个案问题——**这是取舍，不是可解方程**：挡住视线的那块几何本来就是瞄具自身外壳的一部分。「视线被挡」与「模型被删」是同一取舍的两端。
 
-| 瞄具 | 现象 |
-|---|---|
-| SIG TANGO6T 1-6x24 | 模型缺失 ＋ 黑边厚（**可用**） |
-| Marksman 3x30 | 全黑 |
-| TA02 4x32 | 放大过头 |
-| Monstrum 2x32 | 画面比镜框小 |
-| ADO P4 | 边缘空隙 |
+| 瞄具 | 现象 | 说明 |
+|---|---|---|
+| SIG TANGO6T 1-6x24 | 模型缺失 ＋ 黑边厚（**可用**） | 本仓库的 JSON 已含该镜修正值 |
+| Monstrum Tactical Marksman 3×30（`scope_all_monstrum_marksman_3x30`） | 全黑 | **建议加入旁路**，见下节 |
+| TA02 4x32 | 放大过头 | — |
+| Monstrum 2x32 | 画面比镜框小 | — |
+| ADO P4 | 边缘空隙 | — |
 
-定版按瞄具参数 = `custom_mesh_surgery_settings.json`（82 条），TANGO6T 关键值 `NearPreserveDepth=0.005`、`Plane1Radius=0.047253523`。
+## 旁路：让模组对某支瞄具完全不生效
+
+三个互不相同的机制，**任一命中**即让该瞄具走原版渲染：
+
+| 配置键 | 匹配方式 | 出厂默认 |
+|---|---|---|
+| `Auto Bypass Name Contains` | 子串匹配**瞄具对象名或 scope key** | `d-evo; scope_ags_npz_pag17_2,7x` |
+| `Scope Blacklist Names` | **精确**匹配 scope key | 空 |
+| `Scope Whitelist Names` | 精确匹配；**非空时**转为白名单（只放行名单内） | 空（不启用） |
+
+最省事的做法：给 `Scope Blacklist Toggle Entry Key` 绑一个键，**开镜状态下按它**即可把当前瞄具加入/移出黑名单（模组会自己算出正确的 scope key 并写回配置，不用手抄）。
+
+**推荐补充的旁路**（该镜在模组下全黑，旁路后至少作为原版瞄具可用）：
+
+```
+Auto Bypass Name Contains = d-evo; scope_ags_npz_pag17_2,7x; monstrum_marksman_3x30
+Scope Blacklist Names     = scope_all_monstrum_marksman_3x30
+```
+
+## 关于 `custom_mesh_surgery_settings.json`
+
+**本仓库发布的是已调参版，不是上游原始版。**
+
+原因：**上游原始值会让 SIG TANGO6T 出问题** —— `NearPreserveDepth = 0.0433` 使该镜画面发灰/发黑；而 `VignetteOpacity = 0` **并不等于「关闭暗角」，实测会产生一层全屏灰滤镜**。
+
+两者差异**只涉及 TANGO6T 一个瞄具、共 12 个字段**，其余 81 条完全相同：
+
+| 字段 | 上游原始 → 本仓库 |
+|---|---|
+| `NearPreserveDepth` | 0.0433333255 → **0.005** |
+| `VignetteOpacity` / `VignetteRadius` | 0 → **1** / 0 → **0.2676056** |
+| `Plane1Radius` | 0.0207605641 → 0.047253523 |
+| `Plane2Position` / `Plane2Radius` | 0.08098595 / 0.0214507 → 0.142018765 / 0.0238620657 |
+| `Plane3Position` / `Plane3Radius` | 0.409155 / 0.132394359 → 0.535915554 / 0.171830982 |
+| `ReticleBaseSize` / `ReticleSizeMultiplier` | 0.03 / 1 → 0.0143661965 / 1.65661967 |
+| `WeaponScaleMaxMagnification` | 3.12206578 → 2.90422535 |
+| `VisualRecoilCompensation` | 0.2 → 0.25 |
+
+换句话说：**直接用上游原始 JSON，在有 TANGO6T 的局里就会重现上面那些显示异常。** 本仓库这份是实机验证过的可用状态（82 条，SHA256 `655E68DB393FD610…`，与档案中的 `bak_before_4scopes` 逐字段一致）。原始版仍保留在上游仓库。
 
 ## 构建
 
