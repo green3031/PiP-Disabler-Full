@@ -115,6 +115,12 @@ namespace PiPDisabler
             }
             if (!Settings.ModEnabled.Value) return;
 
+            // State-driven lens invariant. Runs BEFORE ShouldRunUpdateLoop() on purpose: that gate
+            // requires `PWA.CurrentScope.IsOptic`, which is false for the exact case this guard
+            // covers (a 1x collimator mode with no OpticSight), so behind the gate it would never
+            // see the frame it exists for. Self-throttled and allocation-free; see the class docs.
+            CollimatorLensGuard.Tick();
+
             if (Settings.ScopeWhitelistToggleEntryKey.Value != KeyCode.None && InputProxy.GetKeyDown(Settings.ScopeWhitelistToggleEntryKey.Value))
             {
                 ScopeLifecycle.ToggleActiveScopeWhitelistEntry();

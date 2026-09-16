@@ -1,0 +1,438 @@
+{
+  "_readme": "PiP-Disabler display-language file. Only the text on the right-hand side of ':' needs translating - never change the keys on the left, and never rename this file's 'sections'/'settings' keys. Step-by-step guide: i18n/README.md",
+  "_language": "中文（简体）",
+  "_languageCode": "zh-CN",
+  "sections": {
+    "General": "通用",
+    "Hacks": "高级技巧",
+    "Graphics": "画面",
+    "Global Mesh Surgery settings": "全局网格手术",
+    "Debug": "调试",
+    "Per scope settings": "当前瞄具设置",
+    "Scope Effects": "镜内效果"
+  },
+  "settings": {
+    "General": {
+      "Language": {
+        "name": "语言",
+        "description": "本模组设置界面的显示语言。\nAuto = 跟随游戏内的语言设置（推荐）。\n也可以直接填语言代码，例如 en、zh-CN、ru。\nEnglish = en，中文 = zh-CN。\n语言文件位于 BepInEx\\plugins\\PiP-Disabler\\i18n\\，新增语言的方法见 i18n\\README.md。"
+      },
+      "Mod Enabled": {
+        "name": "启用模组",
+        "description": "整个模组的总开关。"
+      },
+      "Mod Toggle Key": {
+        "name": "模组开关按键",
+        "description": "切换模组总开关的按键。"
+      },
+      "Auto Disable For NV/Thermals": {
+        "name": "夜视/热成像自动禁用",
+        "description": "对热成像/夜视瞄具自动禁用本模组。"
+      },
+      "Auto Bypass Name Contains": {
+        "name": "自动绕过名称包含",
+        "description": "分号分隔的列表。瞄具的对象名或瞄具 key 只要包含其中任意一项，就会被绕过（走游戏原版渲染）。"
+      },
+      "Scope Blacklist Names": {
+        "name": "黑名单瞄具名",
+        "description": "分号分隔的瞄具 key 列表，列出的瞄具会绕过本模组（走原版渲染）。"
+      },
+      "Scope Blacklist Toggle Entry Key": {
+        "name": "黑名单添加按键",
+        "description": "开镜状态下按下该键，把当前瞄具加入/移出黑名单。"
+      },
+      "Scope Whitelist Names": {
+        "name": "白名单瞄具名",
+        "description": "分号分隔的允许瞄具列表。留空 = 忽略白名单（全部瞄具生效）。"
+      },
+      "Scope Whitelist Toggle Entry Key": {
+        "name": "白名单添加按键",
+        "description": "开镜状态下按下该键，把当前瞄具加入/移出白名单。"
+      },
+      "FOV Fix Behaviour": {
+        "name": "FOV 修复行为",
+        "description": "启用后，1x 的 FOV 会采用游戏设置里的 FOV 值。"
+      },
+      "Global Scope Scaling Multiplier": {
+        "name": "全局瞄具缩放系数",
+        "description": "统一乘以所有瞄具的缩放。如果你觉得瞄具整体偏小或偏大，可以调这一项。"
+      },
+      "Global Reticle Scaling Multiplier": {
+        "name": "全局准星缩放系数",
+        "description": "统一乘以所有准星的缩放。如果你觉得准星整体偏小或偏大，可以调这一项。"
+      },
+      "Baseline FOV": {
+        "name": "基准 FOV",
+        "description": "计算放大后 FOV 时使用的基准（若设为 50，则 2x 就是 25°）。\n注意：分档变倍瞄具的 1x 始终强制为 35°。"
+      },
+      "FOV Animation Duration": {
+        "name": "FOV 过渡时长",
+        "description": "切换放大倍率时 FOV 过渡的时长。"
+      },
+      "Depth of field": {
+        "name": "景深模糊",
+        "description": "在可见镜片范围之外，应用带遮罩的 Dual Kawase 模糊。"
+      },
+      "NVG Lens Blur": {
+        "name": "NVG 镜片模糊",
+        "description": "模糊镜片内的画面，模拟真实夜视仪的成像特性。"
+      }
+    },
+    "Hacks": {
+      "ADS Scope Alignment Angle Tolerance": {
+        "name": "ADS 对准角度容差",
+        "description": "冲刺或姿态切换之后，当前瞄具瞄准轴与主相机之间的最大夹角（度）；超过这个角度时模组暂不生效。"
+      },
+      "Post Sprint ADS Gate Duration": {
+        "name": "冲刺后 ADS 门控时长",
+        "description": "冲刺结束后，瞄具对准门控持续生效的时间。"
+      },
+      "Bypass During Stance Transitions": {
+        "name": "姿态切换时绕过",
+        "description": "在站姿与卧姿之间切换时绕过本模组（走原版渲染）。"
+      },
+      "Post Stance ADS Gate Duration": {
+        "name": "姿态后 ADS 门控时长",
+        "description": "站姿/卧姿切换结束后，瞄具对准门控持续生效的时间。"
+      },
+      "Bypass during reload": {
+        "name": "换弹时绕过",
+        "description": "换弹期间绕过本模组（走原版渲染）。"
+      },
+      "Reload Bypass Modifier": {
+        "name": "换弹绕过强度",
+        "description": "调整换弹绕过的持续时间：数值越大，绕过时间越短。"
+      },
+      "Scale Sway With Camera FOV": {
+        "name": "晃动随 FOV 缩放",
+        "description": "开镜时按当前 FOV 成比例降低武器晃动。"
+      },
+      "Sway Modifier": {
+        "name": "晃动强度",
+        "description": "调整晃动削减的强度。"
+      },
+      "Manual Weapon Scale": {
+        "name": "手动武器缩放",
+        "description": "开镜时直接设定骨架（ribcage）补偿缩放。数值越大，武器看起来越小。"
+      },
+      "Visual Recoil Compensation": {
+        "name": "视觉后坐力补偿",
+        "description": "仅影响渲染：低 FOV 下把屏幕平面相机朝瞄具相机偏移，用于补偿开镜后的后坐与对准。负值反向。0 = 关闭。"
+      },
+      "Suppress Fire Mode Switch Movement": {
+        "name": "抑制射击模式切换动作",
+        "description": "切换射击模式时不播放对应的武器动作，但模式切换照常生效。"
+      },
+      "Suppress Magnification Switch Movement": {
+        "name": "抑制倍率切换动作",
+        "description": "切换瞄具倍率时不播放对应的武器动作，但倍率切换照常生效。"
+      },
+      "Force Recoil Return To Zero": {
+        "name": "后坐力强制归零",
+        "description": "后坐结束后，强制把武器手部旋转的静止点归零，而不是使用塔科夫自带的小幅随机偏移。"
+      }
+    },
+    "Graphics": {
+      "Keep scoped LOD Bias until inventory is opened": {
+        "name": "开镜 LOD 保留至背包",
+        "description": "启用后，退出开镜时 LOD 偏移不会立即恢复，而是保留到打开背包/搜刮界面，或成功转移物品之后。\n关闭后，退出开镜立即恢复 LOD 偏移。"
+      },
+      "Manual LOD Bias": {
+        "name": "手动 LOD 偏移",
+        "description": "开镜时手动设定的 LOD 偏移。\n0 = 自动（放大倍率 × 自动 LOD 偏移系数）。\n数值过高会影响性能！"
+      },
+      "Auto LOD bias multiplier": {
+        "name": "自动 LOD 偏移系数",
+        "description": "顾名思义。\n数值过高会影响性能！"
+      }
+    },
+    "Global Mesh Surgery settings": {
+      "PlaneOffsetMeters": {
+        "name": "平面偏移(米)",
+        "description": "沿平面法线方向施加的偏移（米）。"
+      },
+      "Plane1Radius": {
+        "name": "Plane1 半径(米)",
+        "description": "圆柱/锥形切割的近端半径（米，靠相机一侧）。\n瞄具镜片半径通常在 0.01-0.02 米左右。"
+      },
+      "Plane1OffsetMeters": {
+        "name": "Plane1 偏移(米)",
+        "description": "Plane1 相对 linza/backLens 原点沿枪管轴线的偏移（米）。"
+      },
+      "Plane2Position": {
+        "name": "Plane2 深度(0-1)",
+        "description": "Plane2 的剖面位置（0..1），以近端为基准。\n改变「切割长度(米)」时，该平面到近端的世界空间深度保持不变。"
+      },
+      "Plane2Radius": {
+        "name": "Plane2 半径(米)",
+        "description": "Plane2 处的半径（米）。"
+      },
+      "Plane3Position": {
+        "name": "Plane3 深度(0-1)",
+        "description": "Plane3 的归一化深度：近端 (0) 到远端 (1)。"
+      },
+      "Plane3Radius": {
+        "name": "Plane3 半径(米)",
+        "description": "Plane3 处的半径（米）。"
+      },
+      "Plane4Position": {
+        "name": "Plane4 深度(0-1)",
+        "description": "Plane4 的归一化深度：近端 (0) 到远端 (1)。通常为 1。"
+      },
+      "Plane4Radius": {
+        "name": "Plane4 半径(米)",
+        "description": "Plane4 处的半径（米，远离玩家一侧）。"
+      },
+      "CutStartOffset": {
+        "name": "切割起点偏移(米)",
+        "description": "近端切割平面从 backLens 向相机一侧后退的距离。\n近端平面固定在：backLens - (偏移 × boreAxis)。\n0 = 正好从 backLens 开始；0.05 = 后退 5cm（可切到镜筒内壁结构）。\n改变「切割长度(米)」不会移动这个平面。"
+      },
+      "CutLength": {
+        "name": "切割长度(米)",
+        "description": "切割从近端平面向前（朝物镜方向）延伸的距离。\n远端平面位于：nearPlane + (长度 × boreAxis)。\n改变该值时，只有远端平面会移动。"
+      },
+      "NearPreserveDepth": {
+        "name": "近端保留深度(米)",
+        "description": "从近端切割平面起、完全不切割任何几何体的深度（米）。\n保留最靠近相机的目镜镜身，这样开镜时还能看到一圈细环框住准星。\n0.01 = 1cm 圆环（默认）。0.02-0.04 = 更粗的圆环。\n0 = 关闭（近端平面即开始切割，会全部切掉）。"
+      },
+      "Reticle Base Size": {
+        "name": "准星基础尺寸",
+        "description": "准星的尺寸。"
+      },
+      "Mesh Reticle Min Scale": {
+        "name": "网格准星最小缩放",
+        "description": "归一化与变焦之后，网格准星的最终最小缩放。0 = 关闭。"
+      },
+      "Mesh Reticle Max Scale": {
+        "name": "网格准星最大缩放",
+        "description": "归一化与变焦之后，网格准星的最终最大缩放。0 = 关闭。"
+      },
+      "Mesh Reticle Normalized Scale": {
+        "name": "网格准星归一化缩放",
+        "description": "网格准星包围盒归一化之后乘上的系数。"
+      },
+      "Mesh Reticle Minimum Stroke Enabled": {
+        "name": "网格准星最小线宽",
+        "description": "绘制网格准星时做小幅屏幕空间膨胀，避免细部在降采样后消失。"
+      },
+      "Mesh Reticle Minimum Stroke Pixels": {
+        "name": "网格准星线宽像素",
+        "description": "网格准星的最小可见粗细（屏幕像素，近似值）。"
+      },
+      "ExpandSearchToWeaponRoot": {
+        "name": "搜索扩展到武器根",
+        "description": "让网格切割器作用到整把武器。"
+      },
+      "Auto derive cut region from scope geometry": {
+        "name": "自动推导切割区",
+        "description": "围绕切割轴测量瞄具自身的 renderer 包围盒，并据此放宽切割半径包络，而不是直接采信按瞄具手调的常数（那批常数是针对 4.0.13 的 prefab 调出来的）。\n最终取值按 max(推导值, 手调值) 合成，因此自动模式只会比手调剖面切得更多，绝不会更少。\n关闭 = 与之前的行为完全一致。"
+      },
+      "Auto derive margin": {
+        "name": "自动推导边距",
+        "description": "施加在推导半径上的系数：R = min(max(R_geo, R_manual) × 边距 + 额外半径, 最大半径)。"
+      },
+      "Auto derive extra radius meters": {
+        "name": "自动推导额外半径(米)",
+        "description": "乘以边距系数之后额外叠加的固定值（米）。"
+      },
+      "Auto derive max radius meters": {
+        "name": "自动推导最大半径(米)",
+        "description": "所有推导半径的上限（米）。手调值仍会作为下限生效，因此这个上限不会让切割比原来更小。"
+      },
+      "Auto derive log derived profile": {
+        "name": "自动推导日志输出",
+        "description": "每次推导时输出一次推导出的切割剖面（单行，无逐帧开销）。\n不依赖「调试日志」，可单独开启。"
+      }
+    },
+    "Debug": {
+      "DebugShowHousingMask": {
+        "name": "调试显示镜身遮罩",
+        "description": "在镜片模板（stencil）遮罩所在位置叠加红色显示。"
+      },
+      "DebugShowScopeShadowMask": {
+        "name": "调试显示阴影遮罩",
+        "description": "把阴影镜片遮罩以绿色叠加显示，用于调试。"
+      },
+      "Debug logging": {
+        "name": "调试日志",
+        "description": "启用详细的诊断日志输出。"
+      },
+      "Draw reticle after everything": {
+        "name": "最后绘制准星",
+        "description": "旧版遗留设置。现在准星始终最后绘制，并使用 after-NVG 准星着色器。"
+      }
+    },
+    "Per scope settings": {
+      "Save custom settings key": {
+        "name": "保存按键",
+        "description": "开镜状态下按下该键，把本分类下所有数值按当前瞄具 key 保存到 custom_mesh_surgery_settings.json。"
+      },
+      "DeleteCustomMeshSurgerySettingsKey": {
+        "name": "删除按键",
+        "description": "开镜状态下按下该键，从 custom_mesh_surgery_settings.json 中删除当前瞄具 key 的网格手术设置。"
+      },
+      "PlaneOffsetMeters": {
+        "name": "平面偏移(米)",
+        "description": "按瞄具自定义的平面偏移，沿平面法线方向（米）。"
+      },
+      "Plane1Radius": {
+        "name": "Plane1 半径(米)",
+        "description": "按瞄具自定义的近端半径（米）。"
+      },
+      "Plane1OffsetMeters": {
+        "name": "Plane1 偏移(米)",
+        "description": "按瞄具自定义的 Plane1 偏移（米）。"
+      },
+      "Plane2Position": {
+        "name": "Plane2 深度(0-1)",
+        "description": "按瞄具自定义的 Plane2 位置（0..1）；改变「切割长度(米)」时以近端为基准。"
+      },
+      "Plane2Radius": {
+        "name": "Plane2 半径(米)",
+        "description": "按瞄具自定义的 Plane2 半径（米）。"
+      },
+      "Plane3Position": {
+        "name": "Plane3 深度(0-1)",
+        "description": "按瞄具自定义的 Plane3 深度（0..1）。"
+      },
+      "Plane3Radius": {
+        "name": "Plane3 半径(米)",
+        "description": "按瞄具自定义的 Plane3 半径（米）。"
+      },
+      "Plane4Position": {
+        "name": "Plane4 深度(0-1)",
+        "description": "按瞄具自定义的 Plane4 深度（0..1）。"
+      },
+      "Plane4Radius": {
+        "name": "Plane4 半径(米)",
+        "description": "按瞄具自定义的 Plane4 半径（米）。"
+      },
+      "CutStartOffset": {
+        "name": "切割起点偏移(米)",
+        "description": "按瞄具自定义的切割起点偏移（米）。"
+      },
+      "CutLength": {
+        "name": "切割长度(米)",
+        "description": "按瞄具自定义的切割长度（米）。"
+      },
+      "NearPreserveDepth": {
+        "name": "近端保留深度(米)",
+        "description": "按瞄具自定义的近端保留深度（米）。"
+      },
+      "Reticle Size": {
+        "name": "准星尺寸",
+        "description": "针对准星不随倍率缩放的瞄具，设定该瞄具的准星尺寸。需要保存后才会生效。"
+      },
+      "Reticle Size Multiplier": {
+        "name": "准星尺寸系数",
+        "description": "施加在按瞄具准星尺寸上的系数。1 = 不改变。需要保存后才会生效。"
+      },
+      "Variable Reticle Minimum Size": {
+        "name": "变量准星最小尺寸",
+        "description": "按瞄具自定义的准星最小尺寸。最大或最小只要有一个为 0，此项就不起作用。需要保存后才会生效。"
+      },
+      "Variable Reticle Maximum Size": {
+        "name": "变量准星最大尺寸",
+        "description": "按瞄具自定义的准星最大尺寸。最大或最小只要有一个为 0，此项就不起作用。需要保存后才会生效。"
+      },
+      "Weapon Scale Min Magnification": {
+        "name": "最小倍率武器缩放",
+        "description": "按瞄具自定义：最小放大倍率下的骨架缩放。0 = 使用全局「手动武器缩放」。需要保存后才会生效。数值越大，武器看起来越小。"
+      },
+      "Weapon Scale Max Magnification": {
+        "name": "最大倍率武器缩放",
+        "description": "按瞄具自定义：最大放大倍率下的骨架缩放。0 = 使用全局「手动武器缩放」。需要保存后才会生效。数值越大，武器看起来越小。"
+      },
+      "Weapon Scale Multiplier": {
+        "name": "武器缩放系数",
+        "description": "同时施加在按瞄具武器缩放上下限上的系数。1 = 不改变。需要保存后才会生效。"
+      },
+      "Visual Recoil Compensation": {
+        "name": "视觉后坐力补偿",
+        "description": "按瞄具自定义的视觉后坐力补偿。0 = 使用全局「视觉后坐力补偿」。需要保存后才会生效。负值反向。"
+      },
+      "Vignette Opacity": {
+        "name": "暗角不透明度",
+        "description": "按瞄具自定义的暗角不透明度。0 = 使用「镜内效果」段的默认值。"
+      },
+      "Vignette Radius": {
+        "name": "暗角半径",
+        "description": "按瞄具自定义的暗角半径。0 = 使用「镜内效果」段的默认值。"
+      },
+      "Vignette Softness": {
+        "name": "暗角柔化",
+        "description": "按瞄具自定义的暗角柔化。0 = 使用「镜内效果」段的默认值。"
+      },
+      "ExpandSearchToWeaponRoot": {
+        "name": "搜索扩展到武器根",
+        "description": "按瞄具自定义：把搜索根扩展到 Weapon_root。"
+      }
+    },
+    "Scope Effects": {
+      "Vignette": {
+        "name": "暗角",
+        "description": "在瞄具通光孔周围绘制一圈圆形暗角。"
+      },
+      "Vignette Opacity": {
+        "name": "暗角不透明度",
+        "description": "镜片暗角环的最大不透明度（0=不可见，1=全黑）。"
+      },
+      "Vignette Radius": {
+        "name": "暗角半径",
+        "description": "镜片暗角的内部透明半径（0=从中心开始变暗，0.5=外半圈变暗，1=仅边缘变暗）。"
+      },
+      "Vignette Softness": {
+        "name": "暗角柔化",
+        "description": "用于渐变过渡的暗角半径比例（0=硬边，1=完全渐变）。"
+      },
+      "Scope Shadow": {
+        "name": "镜身阴影",
+        "description": "除镜片遮罩范围之外，全屏叠加一层黑色阴影。"
+      },
+      "ScopeShadow Persist On Unscope": {
+        "name": "退出开镜保留阴影",
+        "description": "退出 ADS 后继续显示镜身阴影，直到 FOV 恢复完成；当「FOV 过渡时长」设为 0 时比较有用。"
+      },
+      "ScopeShadow Opacity": {
+        "name": "阴影不透明度",
+        "description": "镜身阴影叠加层的最大不透明度。"
+      },
+      "Depth of field Blur Downsample": {
+        "name": "景深模糊降采样",
+        "description": "镜外模糊的降采样除数。数值越大速度越快，但画面更软、更块状。"
+      },
+      "Depth of field Blur Iterations": {
+        "name": "景深模糊迭代次数",
+        "description": "镜片范围之外 Dual Kawase 链的迭代层数。"
+      },
+      "Depth of field Blur Radius": {
+        "name": "景深模糊半径",
+        "description": "Dual Kawase 在当前 pass 的像素采样偏移。"
+      },
+      "Depth of field Blur Opacity": {
+        "name": "景深模糊不透明度",
+        "description": "镜外模糊画面与原始画面的混合强度。"
+      },
+      "Depth of field Blur Darkening": {
+        "name": "景深模糊压暗",
+        "description": "对镜外模糊画面额外施加的压暗量。"
+      },
+      "Depth of field Blur Radial Gate": {
+        "name": "景深模糊径向门控",
+        "description": "按到镜片中心的屏幕距离渐入镜外模糊。"
+      },
+      "Depth of field Blur Radial Gate Start": {
+        "name": "径向门控起点",
+        "description": "镜外模糊开始的位置：到镜片中心的距离，单位为镜片半径。"
+      },
+      "Depth of field Blur Radial Gate Softness": {
+        "name": "径向门控柔化",
+        "description": "径向模糊门控的渐入宽度，单位为镜片半径。"
+      },
+      "NVG Lens Blur Multiplier": {
+        "name": "NVG 镜片模糊系数",
+        "description": "NVG 镜片模糊的系数，数值越大越模糊。"
+      }
+    }
+  }
+}
