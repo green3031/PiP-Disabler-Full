@@ -116,7 +116,7 @@ Scope Blacklist Names     = scope_all_monstrum_marksman_3x30
 - `Tools\verify_defaults_unchanged.ps1` —— 既有默认值不得变动（应报 **102 compared / 0 mismatched**）
 
 > **可复现性已实测**：全新 `git clone` 本仓库后直接编译，得到与 `release\PiP-Disabler.dll` **逐字节相同**的文件
-> （215,040 字节 / SHA256 `85AC781CDADF9EFA10F5D52862665D3F7C4B9E0AE670C7CFF1EFE3D4C5249A69`），
+> （227,840 字节 / SHA256 `E1D3CA5B089608BF0B86FE407B12544DA4CF453A71EBD25ECDCEB4758CAF2A44`），
 > 换个目录编译结果也一样。构建开关含 `-deterministic`；`.gitattributes` 锁定文本文件为 LF，
 > 避免行尾被平台或 `core.autocrlf` 改写而影响结果。
 
