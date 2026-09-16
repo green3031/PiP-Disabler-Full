@@ -3,7 +3,7 @@
 把 **PiP-Disabler**（原作者 [Fiodorwellfme](https://github.com/Fiodorwellfme)）移植到 **SPT 4.1.5 / EFT 0.16.9.5**。
 
 > **本仓库内容 = 结案版（定版）**，不是实验分支。
-> 版本 `1.5.0`　DLL `215 040` 字节　SHA256 `85AC781CDADF9EFA10F5D52862665D3F7C4B9E0AE670C7CFF1EFE3D4C5249A69`
+> 版本 `1.5.16`　DLL `227 840` 字节　SHA256 `E1D3CA5B089608BF0B86FE407B12544DA4CF453A71EBD25ECDCEB4758CAF2A44`
 
 ---
 

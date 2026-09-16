@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace PiPDisabler
 {
-    [BepInPlugin("com.fiodor.pipdisabler", "PiP-Disabler", "1.5.0")]
+    [BepInPlugin("com.fiodor.pipdisabler", "PiP-Disabler", "1.5.16")]
     [BepInDependency("com.fontaine.fovfix", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Shibatsu.DynamicExternalResolution", BepInDependency.DependencyFlags.SoftDependency)]
 
@@ -43,7 +43,7 @@ namespace PiPDisabler
             // silently (Version == null -> Chainloader.ToPluginInfo returns null, and the
             // TypeLoader cache then keeps reporting "0 plugins" for this file forever).
             // Build marker therefore lives in this log line only.
-            LogSource.LogInfo("PiP-Disabler 1.5.0 (SPT 4.1.5 full port) loaded.");
+            LogSource.LogInfo("PiP-Disabler 1.5.16 (SPT 4.1.5 full port) loaded.");
             Settings.Init(Config);
             Patches.Patcher.Enable();
             ScopeLifecycle.Init();
