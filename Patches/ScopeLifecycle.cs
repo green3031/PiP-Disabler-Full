@@ -26,6 +26,14 @@ namespace PiPDisabler
         private static bool _restoreOneXFovOnScopeExit;
         private static bool _meshSurgerySuppressedByReload;
         private static bool _reticleSuppressedByReload;
+
+        /// <summary>
+        /// Set when the current optic stopped being resolvable while the player is still aiming
+        /// (a hybrid mode with no OpticSight of its own). Cleared on the next scope enter. Makes the
+        /// resulting exit hand the vanilla optic camera back instead of leaving it suppressed while
+        /// the lens mesh is restored.
+        /// </summary>
+        private static bool _lostOpticWhileAiming;
         private static MovementContext _subscribedMovementContext;
 
         private static float _postExitRestoreFov;
@@ -276,9 +284,22 @@ namespace PiPDisabler
                 {
                     // Hybrid toggle case: CurrentScope may still report optic while the
                     // enabled OpticSight switched off (e.g., now in collimator mode).
-                    // Force scope exit immediately so RestoreAll runs without waiting for
-                    // a full ADS exit.
+                    //
+                    // Measured on the EOTech HHS-1: the collimator mode node carries only a
+                    // Transform — no OpticSight at all — so flipping the magnifier away fires
+                    // OnOpticDisabled and this branch, while the player is still aiming through the
+                    // sight. Log tally for one raid: 8x reason='not aiming' (genuine unscopes) vs 6x
+                    // this branch, all caller=OnOpticDisabled, e.g. SCOPED->NOT_SCOPED at frame 62103
+                    // only 75 frames after the ENTER at frame 62028.
+                    //
+                    // There is nothing for this mod to manage in that mode (no OpticSight means no
+                    // zoom handler and no camera data), so handing the scope back to vanilla is
+                    // correct — but it MUST be a complete hand-back: DoScopeExit() restores the lens
+                    // mesh, so leaving the vanilla optic camera suppressed would leave the restored
+                    // lens sampling a null _CamTex (a black sight). _lostOpticWhileAiming makes that
+                    // exit restore the camera path too; see DoScopeExit().
                     shouldBeScoped = false;
+                    _lostOpticWhileAiming = true;
                     reason = "optic flag true but no enabled OpticSight";
                     exitingToNonOpticWhileAiming = true;
                     goto evaluate;
@@ -369,6 +390,22 @@ namespace PiPDisabler
                     ScopeEffectsRenderer.Show();
                     PiPDisablerPlugin.DebugLogInfo($"[ScopeLifecycle] Mesh surgery resumed after reload. frame={Time.frameCount}");
                 }
+            }
+
+            if (_activeOptic != null && !_meshSurgerySuppressedByReload)
+            {
+                // Keep the still-drawn lens surfaces of THIS optic in step with the game's thermal
+                // state. `_ThermalVisionOn` may be present as a per-material override written by
+                // another mod once per weapon initialisation (BetterThermalNightVision's
+                // T7ScopeHook); such a value is never re-evaluated for a new optic instance, and
+                // while this mod owns the scope the optic camera that a "not thermal" lens would
+                // sample from is suppressed — so a stale value renders the surface black.
+                // Cheap on the steady path: one float compare inside the call.
+                LensTransparency.RefreshImageLensThermalState(
+                    CameraManager.Exist &&
+                    CameraManager.Instance != null &&
+                    CameraManager.Instance.ThermalVision != null &&
+                    CameraManager.Instance.ThermalVision.On);
             }
 
             if (_activeOptic != null)
@@ -897,6 +934,7 @@ namespace PiPDisabler
 
             _isScoped = true;
             _activeOptic = os;
+            _lostOpticWhileAiming = false;
             PerScopeMeshSurgerySettings.SetActiveScope(ResolveWhitelistScopeKey(os));
 
             _modBypassedForCurrentScope = ShouldBypassForCurrentOptic(os);
@@ -1013,6 +1051,30 @@ namespace PiPDisabler
                 MeshSurgeryManager.RestoreForScope(prevOptic.transform);
             else
                 MeshSurgeryManager.RestoreAll();
+
+            // 7. Complete the hand-back when the exit was caused by the optic becoming unresolvable
+            //    while the player is still aiming (see _lostOpticWhileAiming).
+            //
+            //    Step 4 above just restored the window lens mesh. The vanilla optic camera and the
+            //    _CamTex global that lens samples are still suppressed by
+            //    OpticCameraManagerEnableOptic_NoPipPatch / ReleaseRenderTexture, and nothing in this
+            //    mod re-drives that enable — CleanupVanillaOpticState() only clears CurrentOpticSight,
+            //    the reticle and the lens fade. So without this the restored lens draws from a picture
+            //    source this mod intentionally killed: the measured black sight, which then stays black
+            //    until the weapon is re-instantiated.
+            //
+            //    The common exit (player lowered the scope) deliberately does NOT do this: EFT re-drives
+            //    the optic camera enable on the next ADS, so that path is left exactly as it was.
+            if (_lostOpticWhileAiming)
+            {
+                PiPDisabler.RestoreAllCameras();
+                Patches.VanillaOpticSuppression.RestoreCameraPathForHandBack();
+
+                PiPDisablerPlugin.DebugLogInfo(
+                    "[ScopeLifecycle] Handed the scope back to vanilla: current mode has no OpticSight" +
+                    " of its own while the player is still aiming (optic camera + _CamTex restored)");
+            }
+            _lostOpticWhileAiming = false;
 
             _restoreOneXFovOnScopeExit = false;
         }

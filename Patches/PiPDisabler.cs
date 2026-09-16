@@ -274,6 +274,10 @@ namespace PiPDisabler
 
         public static void RestoreAllCameras()
         {
+            // This mod stops being the owner of the optic camera path (shutdown, mod disable,
+            // bypass, or a full hand-back). CollimatorLensGuard keys its invariant off that state.
+            Patches.VanillaOpticSuppression.SetModOwnsOpticCamera(false);
+
             for (int i = 0; i < _cams.Count; i++)
             {
                 var st = _cams[i];
@@ -317,6 +321,10 @@ namespace PiPDisabler
         private static void ForceDisable(Camera cam)
         {
             if (cam == null) return;
+
+            // Taking the vanilla optic camera down IS the take-over this mod's lens-hiding
+            // invariant is keyed off, so record it before anything can throw below.
+            Patches.VanillaOpticSuppression.SetModOwnsOpticCamera(true);
 
             // Store only once
             for (int i = 0; i < _cams.Count; i++)
