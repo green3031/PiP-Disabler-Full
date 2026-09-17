@@ -417,14 +417,27 @@ namespace PiPDisabler
                     new ConfigurationManagerAttributes { IsAdvanced = true })));
 
             // --- Auto-derived cut region (measured from the optic's own geometry) ---
-            ConfigEntries.Add(AutoDeriveCutRegion = config.Bind("Global Mesh Surgery settings", "Auto derive cut region from scope geometry", true,
+            //
+            // DEFAULT OFF since 1.5.17. This is an experiment that was measured to be harmful,
+            // so it must not be what a fresh install runs.
+            //   * The result is composed as max(derived, hand-tuned), so it can only ever WIDEN
+            //     the radius envelope - never narrow it.
+            //   * MeshSurgeryManager passes keepInside: false to the cutter, so everything INSIDE
+            //     that envelope is deleted. Widening the envelope therefore deletes MORE geometry.
+            //   * Measured in-game: Plane1Radius x4 makes the scope's own body disappear.
+            //   * ExpandSearchToWeaponRoot defaults to true, so the same widening reaches the
+            //     weapon itself and not just the optic.
+            // The hand-tuned per-scope JSON profile is the verified-good path. A tuner can still
+            // turn this on deliberately; nothing else depends on the old default.
+            ConfigEntries.Add(AutoDeriveCutRegion = config.Bind("Global Mesh Surgery settings", "Auto derive cut region from scope geometry", false,
                 new ConfigDescription(
                     "Measure the optic's own renderer bounds around the cut axis and widen the cut\n" +
-                    "radius envelope to match, instead of trusting the hand-tuned per-scope numbers\n" +
-                    "(those were tuned against the 4.0.13 prefabs).\n" +
+                    "radius envelope to match, instead of trusting the hand-tuned per-scope numbers.\n" +
                     "The result is composed as max(derived, hand-tuned), so auto mode can only ever\n" +
-                    "cut MORE than the hand-tuned profile, never less.\n" +
-                    "Off = exactly the previous behaviour.",
+                    "cut MORE than the hand-tuned profile, never less - and because the cutter deletes\n" +
+                    "everything inside that envelope, the extra width removes the optic's own model\n" +
+                    "(and, with ExpandSearchToWeaponRoot on, geometry on the weapon as well).\n" +
+                    "Default OFF since 1.5.17. On = use the derived profile instead of the tuned one.",
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false })));
             ConfigEntries.Add(AutoDeriveMargin = config.Bind("Global Mesh Surgery settings", "Auto derive margin", 1.15f,

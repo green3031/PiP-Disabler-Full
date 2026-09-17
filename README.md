@@ -3,7 +3,14 @@
 把 **PiP-Disabler**（原作者 [Fiodorwellfme](https://github.com/Fiodorwellfme)）移植到 **SPT 4.1.5 / EFT 0.16.9.5**。
 
 > **本仓库内容 = 结案版（定版）**，不是实验分支。
-> 版本 `1.5.16`　DLL `227 840` 字节　SHA256 `E1D3CA5B089608BF0B86FE407B12544DA4CF453A71EBD25ECDCEB4758CAF2A44`
+> 版本 `1.5.17`　DLL `228 352` 字节　SHA256 `26491EFAE650584EED6ACF8B3964CD34DDD93AEE4718746F01592F22239B7301`
+>
+> **1.5.17 变更**：`Auto derive cut region from scope geometry`（自动推导切割区）默认值由 `true` 改为 **`false`**。
+> 该算法已被实机判定有害（会删除瞄具自身模型，见 `docs\已知问题.md` §六），但 1.5.16 把「开启」当作新装默认值，
+> 于是**每个全新安装**都会跑它，而作者的已验证配置里它是关着的 —— 这是本次唯一的改动，无其它行为变化。
+>
+> ⚠️ **BepInEx 不会覆盖已存在的 cfg**：从 1.5.16 升上来的用户该值仍是 `true`，
+> 需要手动在 F12 里关闭，或删掉 `BepInEx\config\com.fiodor.pipdisabler.cfg` 让它按新默认值重建。
 
 ---
 
@@ -116,8 +123,8 @@ Scope Blacklist Names     = scope_all_monstrum_marksman_3x30
 - `Tools\verify_defaults_unchanged.ps1` —— 既有默认值不得变动（应报 **102 compared / 0 mismatched**）
 
 > **可复现性已实测**：全新 `git clone` 本仓库后直接编译，得到与 `release\PiP-Disabler.dll` **逐字节相同**的文件
-> （227,840 字节 / SHA256 `E1D3CA5B089608BF0B86FE407B12544DA4CF453A71EBD25ECDCEB4758CAF2A44`），
-> 换个目录编译结果也一样。构建开关含 `-deterministic`；`.gitattributes` 锁定文本文件为 LF，
+> （228,352 字节 / SHA256 `26491EFAE650584EED6ACF8B3964CD34DDD93AEE4718746F01592F22239B7301`），
+> 换个目录编译结果也一样（1.5.17 已实测：换输出路径重编译两次，哈希一致）。构建开关含 `-deterministic`；`.gitattributes` 锁定文本文件为 LF，
 > 避免行尾被平台或 `core.autocrlf` 改写而影响结果。
 
 > `Tools\` 下还留有更早期做法（把 cfg 键名汉化）的脚本 —— `verify_zh_rewrite.ps1`（其文件头已标 `OBSOLETE / DO NOT RUN`）、`apply_settings_zh.ps1`、`migrate_cfg_names.ps1`。**现行方案是外部语言文件，不需要它们**，保留仅为记录演进过程。

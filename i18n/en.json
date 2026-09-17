@@ -225,7 +225,7 @@
       },
       "Auto derive cut region from scope geometry": {
         "name": "Auto derive cut region from scope geometry",
-        "description": "Measure the optic's own renderer bounds around the cut axis and widen the cut\n\\radius envelope to match, instead of trusting the hand-tuned per-scope numbers\n\\(those were tuned against the 4.0.13 prefabs).\n\\The result is composed as max(derived, hand-tuned), so auto mode can only ever\n\\cut MORE than the hand-tuned profile, never less.\n\\Off = exactly the previous behaviour."
+        "description": "Measure the optic's own renderer bounds around the cut axis and widen the cut\nradius envelope to match, instead of trusting the hand-tuned per-scope numbers.\nThe result is composed as max(derived, hand-tuned), so auto mode can only ever\ncut MORE than the hand-tuned profile, never less - and because the cutter deletes\neverything inside that envelope, the extra width removes the optic's own model\n(and, with ExpandSearchToWeaponRoot on, geometry on the weapon as well).\nDefault OFF since 1.5.17. On = use the derived profile instead of the tuned one."
       },
       "Auto derive margin": {
         "name": "Auto derive margin",
